@@ -178,3 +178,6 @@ pyrightconfig.json
 
 #database
 /mysql
+
+#Static Files
+/static

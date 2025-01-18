@@ -6,9 +6,9 @@ ENV PYTHONUNBUFFERED=1
 RUN apk add --no-cache gcc musl-dev libffi-dev mariadb-connector-c-dev pkgconfig
 
 COPY ./requirements.txt /tmp/requirements.txt
-COPY . /core
+COPY . /HONESTA-CONVENIENCIA
 
-WORKDIR /core
+WORKDIR /HONESTA-CONVENIENCIA
 EXPOSE 8000
 
 

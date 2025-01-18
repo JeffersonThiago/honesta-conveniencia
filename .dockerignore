@@ -1,0 +1,16 @@
+# Ignorar arquivos de cache do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignorar arquivos e pastas desnecessários
+*.sqlite3
+db.sqlite3
+/static/
+media/
+mysql/
+
+# Ignorar dependências locais
+venv/
+
