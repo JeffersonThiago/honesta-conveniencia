@@ -1,38 +1,57 @@
+networks:
+  nginx_net:
+    driver: bridge
+
 services:
   db:
     image: mysql:8.0
     container_name: mysql_db
     restart: on-failure
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} 
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     volumes:
       - ./mysql:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - 3306:3306
+    networks:
+      - nginx_net
+
 
   back-end:
-    build: .
+    build: 
+      context: .
     container_name: back-end
-    command: >
-      sh -c "python manage.py makemigrations &&
-      python manage.py migrate &&
-      python manage.py collectstatic --no-input &&
-      python manage.py runserver 0.0.0.0:8000"
-    restart: on-failure
+    restart: always
     environment:
-      MYSQL_HOST: ${MYSQL_HOST}
-      MYSQL_PORT: ${MYSQL_PORT}
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      SECRET_KEY: ${SECRET_KEY}
+      DEBUG: ${DEBUG}
     volumes:
       - .:/HONESTA-CONVENIENCIA
-    ports:
-      - "8000:8000"
+      - ./static:/HONESTA-CONVENIENCIA/static
+      - ./media:/HONESTA-CONVENIENCIA/media
     depends_on:
       - db
+    networks:
+      - nginx_net
 
-volumes:
-  mysql:  
-    driver: local
+
+  nginx:
+    image: nginx:1.27.3-alpine-slim
+    container_name: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./static:/HONESTA-CONVENIENCIA/static  # ADICIONE ESTA LINHA
+      - ./media:/HONESTA-CONVENIENCIA/media    # ADICIONE ESTA LINHA
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - back-end
+    networks:
+      - nginx_net

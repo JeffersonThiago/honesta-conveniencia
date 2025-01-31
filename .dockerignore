@@ -1,5 +1,18 @@
-# Ignorar arquivos de cache do Python
-__pycache__/
+# Git
+.git
+.gitignore
+
+# Docker 
+.docker
+
+# Python
+app/__pycache__/
+app/*/__pycache__/
+app/*/*/__pycache__/
+app/*/*/*__pycache__/
+.env/
+.venv/
+venv/
 *.pyc
 *.pyo
 *.pyd
@@ -10,7 +23,5 @@ db.sqlite3
 /static/
 media/
 mysql/
-
-# Ignorar dependências locais
-venv/
+/nginx.conf/
 
