@@ -181,3 +181,6 @@ pyrightconfig.json
 
 #Static Files
 /static
+
+#Media
+/media

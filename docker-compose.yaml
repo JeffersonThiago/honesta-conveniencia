@@ -46,8 +46,8 @@ services:
     container_name: nginx
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./static:/HONESTA-CONVENIENCIA/static  # ADICIONE ESTA LINHA
-      - ./media:/HONESTA-CONVENIENCIA/media    # ADICIONE ESTA LINHA
+      - ./static:/HONESTA-CONVENIENCIA/static 
+      - ./media:/HONESTA-CONVENIENCIA/media    
     ports:
       - 80:80
       - 443:443
