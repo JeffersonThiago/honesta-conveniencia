@@ -55,3 +55,27 @@ services:
       - back-end
     networks:
       - nginx_net
+
+  redis:
+    image: redis:7.4-alpine
+    container_name: redis
+    ports:
+      - 6379:6379 
+    command: redis-server --appendonly yes --loglevel warning
+    volumes:
+      - ./data:/data
+    networks:
+      - nginx_net
+
+  celery-worker:
+    build: .
+    container_name: celery-worker
+    command: celery -A core worker --loglevel=info
+    restart: always
+    volumes:
+      - .:/HONESTA-CONVENIENCIA
+    depends_on:
+      - db
+      - redis
+    networks:
+        - nginx_net

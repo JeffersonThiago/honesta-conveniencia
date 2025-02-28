@@ -9,7 +9,8 @@ class UserAdmin(admin.ModelAdmin):
         "first_name",
         "last_name",
         "email",
-        "is_active"
+        "is_active",
+        "is_superuser"
     )
     list_display_links = ("id", "email")
     search_fields = ("first_name", "last_name", "email")
