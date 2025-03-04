@@ -29,7 +29,7 @@ class UserManager(BaseUserManager):
         extra_fields = {"is_staff": True, "is_superuser": True, "is_active": True}
 
         user = self.create_user(
-            email, password, first_name=first_name, last_name=last_name, **extra_fields
+            email=email, first_name=first_name, last_name=last_name, password=password, **extra_fields
         )
         return user
 
@@ -65,11 +65,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         verification_code = "".join(secrets.choice("0123456789") for i in range(6))
         return verification_code
 
-    def activate_user(self, code: str) -> bool:
+    def verification_code_is_valid(self, code: str) -> bool:
         if self.verification_code == code:
-            self.is_active = True
-            self.save()
-        return self.is_active
+            return True
+        return False
+
+    def activate_user(self) -> bool:
+        self.is_active =  True
+        self.save()
+        return self.is_active 
 
     def deactivate_user(self) -> bool:
         self.is_active = False

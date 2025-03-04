@@ -177,10 +177,12 @@ pyrightconfig.json
 
 
 #database
-/mysql
+/mysql/
 
 #Static Files
 /static
 
 #Media
-/media
+/media/
+
+/data
